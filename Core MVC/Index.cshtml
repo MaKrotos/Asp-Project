@@ -1,0 +1,12 @@
+﻿@model List<string>
+
+<h2>Выберите файл тендера</h2>
+
+<ul>
+    @foreach (var file in Model)
+    {
+        <li>
+            <a href="@Url.Action("Details", new { fileName = file })">@file</a>
+        </li>
+    }
+</ul>

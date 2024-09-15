@@ -1,0 +1,79 @@
+﻿@using TendersLib
+@model List<Tender>
+
+@{
+    ViewBag.Title = ViewBag.FileName;
+    var jsonData = System.Text.Json.JsonSerializer.Serialize(Model);
+}
+
+<h2>@ViewBag.FileName</h2>
+
+<table id="tendersTable">
+    <thead>
+        <tr>
+            <th onclick="sortTable(0)">Название</th>
+            <th onclick="sortTable(1)">Дата Начала</th>
+            <th onclick="sortTable(2)">Дата Окончания</th>
+            <th onclick="sortTable(3)">URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tender in Model)
+        {
+            <tr>
+                <td>@tender.Name</td>
+                <td>@tender.DateStart</td>
+                <td>@tender.DateEnd</td>
+                <td>@tender.URL</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function sortTable(columnIndex) {
+        var table = document.getElementById("tendersTable");
+        var rows = table.rows;
+        var switching = true;
+        var shouldSwitch;
+        var i;
+        var x, y;
+        var dir = "asc";
+        var switchcount = 0;
+
+        while (switching) {
+            switching = false;
+            var rowsArray = Array.prototype.slice.call(rows, 1);
+
+            for (i = 0; i < (rowsArray.length - 1); i++) {
+                shouldSwitch = false;
+                x = rowsArray[i].getElementsByTagName("TD")[columnIndex];
+                y = rowsArray[i + 1].getElementsByTagName("TD")[columnIndex];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldSwitch) {
+                rowsArray[i].parentNode.insertBefore(rowsArray[i + 1], rowsArray[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>

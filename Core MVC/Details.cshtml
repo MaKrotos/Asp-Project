@@ -1,0 +1,27 @@
+﻿@using ClassesWeb
+
+@model List<Tender>
+
+<h2>Тендеры из файла @ViewBag.FileName</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Название тендера</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+            <th>URL тендерной площадки</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tender in Model)
+        {
+            <tr>
+                <td>@tender.Title</td>
+                <td>@tender.StartDate.ToString("dd.MM.yyyy")</td>
+                <td>@tender.EndDate.ToString("dd.MM.yyyy")</td>
+                <td><a href="@tender.Url">@tender.Url</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

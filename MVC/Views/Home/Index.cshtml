@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Tenders";
+}
+
+<h2>Выберите файл</h2>
+
+<form asp-action="GetData" method="post">
+    <select name="fileName">
+        @foreach (var file in ViewBag.Files)
+        {
+            <option value="@file">@file</option>
+        }
+    </select>
+    <button type="submit">Выбрать</button>
+</form>
